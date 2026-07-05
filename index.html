@@ -103,7 +103,7 @@ li:hover{
     <button onclick="clearAllTodos()">Clear All</button>
 
     <form onsubmit="addTodo(event)">
-        <input type="text" id="todo-input" placeholder="Enter a task..." required>
+        <input type="text" id="todo-input" placeholder="Enter a task..." >
     </form>
 
     <ul id="all-task"></ul>
@@ -113,22 +113,48 @@ li:hover{
 const todoKaInput = document.querySelector("#todo-input");
 const ul = document.querySelector("#all-task");
 
-function addTodo(event){
-    event.preventDefault();
+const tasks = [
+  "complete weather app",
+  "bike safai",
+  "running",
+  "namaz",
+  "GYM",
+  "complete video lecture",
+];
 
-    if(todoKaInput.value.trim() === ""){
-        return;
-    }
+function showTask() {
+  ul.innerHTML = "";
 
-    const li = document.createElement("li");
-    li.textContent = todoKaInput.value;
+  for (let i = 0; i < tasks.length; i++) {
+    ul.innerHTML += `<li>${tasks[i]}
+    <button onclick="deleteTodo(${i})">delete</button>
+    </li>`;
+  }
+}
+showTask();
 
-    ul.appendChild(li);
-    todoKaInput.value = "";
+function addTodo(event) {
+  event.preventDefault();
+
+  const task = todoKaInput.value;
+
+  tasks.push(task);
+
+  showTask();
+
+  todoKaInput.value = "";
 }
 
-function clearAllTodos(){
-    ul.innerHTML = "";
+function deleteTodo(index) {
+  tasks.splice(index, 1);
+
+  showTask();
+}
+
+function clearAllTodos() {
+  tasks.length = 0; // array ko empty karna
+
+  showTask();
 }
 </script>
 
